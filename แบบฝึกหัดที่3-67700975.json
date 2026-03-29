@@ -1,0 +1,134 @@
+{
+  "name": "แบบฝึกหัดที่3-67700975",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1JPYQexzsxoDjgZq52T-C3x6m0tCj1j0ke3uh2ZTEduc",
+          "mode": "list",
+          "cachedResultName": "ลงทะเบียน (การตอบกลับ)",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JPYQexzsxoDjgZq52T-C3x6m0tCj1j0ke3uh2ZTEduc/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 420441245,
+          "mode": "list",
+          "cachedResultName": "การตอบแบบฟอร์ม 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1JPYQexzsxoDjgZq52T-C3x6m0tCj1j0ke3uh2ZTEduc/edit#gid=420441245"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "fb92be5f-13fa-45af-a10c-d2422ec5cea0",
+      "name": "Google Sheets Trigger",
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "ZHdwyqWUxgtC4DTe",
+          "name": "Google Sheets Trigger account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return items.map(item => {\n\n  const serial = item.json[\"ประทับเวลา\"];\n\n  const excelEpoch = new Date(1899, 11, 30);\n  const date = new Date(excelEpoch.getTime() + serial * 86400000);\n\n  item.json[\"วันที่\"] = date.toLocaleString(\"th-TH\");\n\n  return item;\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "0eae9a04-156d-4fce-ac09-7e68b061d36d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "sendTo": "sanguandee1983@gmail.com",
+        "subject": "ลงทะเบียนใหม่",
+        "message": "=รหัสนักศึษา {{ $json[\"รหัสนักศึกษา\"] }}\nชื่อ-นามสกุล {{ $json[\"ชื่อ-นามสกุล\"] }}\nคณะ {{ $json[\"คณะ\"] }}\nวันที่ {{ $json[\"วันที่\"] }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "ae0cefbb-ecc8-426f-9cf2-4d27e491e45f",
+      "name": "Send a message",
+      "webhookId": "bae5d7a8-8655-4b93-a3e8-0b321571c6cf",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "m0VZQ5B3cpHALW89",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "ส่งแจ้งเตือนการลงทะเบียนไปยัง Gmail\nรับข้อมูลจาก Google Sheet ใช้ Javascript code\n67700975 Somdech Sa-nguandee"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -336,
+        -16
+      ],
+      "typeVersion": 1,
+      "id": "a3af6c69-5a11-4579-8aa3-a26ea51b19c5",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "d27d8116-dca7-4915-be3e-b205d1af004d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "2b77c2389280395abdd36f9827d7fceabf3c99bc7638c232036b3ae02724f484"
+  },
+  "id": "5IyVEzBXLcllKMQa",
+  "tags": []
+}
