@@ -41,7 +41,7 @@
                                     <option value="" disabled>-- เลือกคณะ --</option>
                                     <option value="บริหารธุรกิจ">บริหารธุรกิจ</option>
                                     <option value="บัญชี">บัญชี</option>
-                                    <option value="เทคโนโลยีสารสนเท">เทคโนโลยีสารสนเทศ</option>
+                                    <option value="เทคโนโลยีสารสนเทศและการสื่อสาร">เทคโนโลยีสารสนเทศ</option>
                                 </select>
                             </div>
 
